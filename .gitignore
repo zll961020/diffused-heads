@@ -134,3 +134,4 @@ results/
 data/
 checkpoints/
 .tmp/
+/config_crema.yaml
