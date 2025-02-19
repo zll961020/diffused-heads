@@ -58,6 +58,7 @@ class Diffusion(nn.Module):
         return xt
 
     def get_p_params(self, xt, timesteps, nn_out):
+        timesteps = timesteps.to(self.beta.device)
         if self.in_channels == self.out_channels:
             eps_pred = nn_out
             p_logvar = self.expand(torch.log(self.beta[timesteps]))

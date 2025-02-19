@@ -12,7 +12,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision.transforms import Compose, GaussianBlur, Grayscale, Resize
 import torchaudio
-
+from functools import wraps
+import time 
 decord.bridge.set_bridge('torch')
 torchaudio.set_audio_backend("sox_io")
 
@@ -194,3 +195,14 @@ def create_windowed_sequence(seqs, snip_length, cut_dim=0, cutting_stride=None, 
         windowed_seqs.append(cut_n_stack(seq, snip_length, cut_dim, cutting_stride, pad_samples).unsqueeze(0))
 
     return torch.cat(windowed_seqs)
+
+def timing_decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"Function '{func.__name__}' executed in {execution_time:.4f} seconds")
+        return result
+    return wrapper

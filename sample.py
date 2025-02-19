@@ -2,10 +2,11 @@ import hydra
 import torch
 
 from diffusion import Diffusion
-from utils import get_id_frame, get_audio_emb, save_video
+from utils import get_id_frame, get_audio_emb, save_video, timing_decorator
 
 
 @hydra.main(config_path='.', config_name='config_crema', version_base='1.1')
+@timing_decorator
 def main(args):
     device = 'cuda' if args.gpu and torch.cuda.is_available() else 'cpu'
 
